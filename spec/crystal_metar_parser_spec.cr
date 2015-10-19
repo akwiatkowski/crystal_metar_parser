@@ -8,7 +8,13 @@ describe CrystalMetarParser do
     metar.city.code.should eq "EPPO"
     metar.wind.speed.should be > 2.50
     metar.wind.speed.should be < 2.60
+    metar.temperature.degrees.should eq 9
+    metar.temperature.dew.should eq 6
+    metar.pressure.pressure.should eq 1019
+    metar.time.time.day.should eq 19
+    metar.time.time.hour.should eq 12
 
-    puts metar.wind.speed_kmh
+
+    puts metar.time.time
   end
 end
