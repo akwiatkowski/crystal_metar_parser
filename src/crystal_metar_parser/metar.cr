@@ -11,6 +11,7 @@ require "./metar/clouds"
 
 require "./metar/metar_specials"
 require "./metar/runway"
+require "./metar/metar_other"
 
 module CrystalMetarParser
   class Metar
@@ -36,6 +37,7 @@ module CrystalMetarParser
 
       @specials = CrystalMetarParser::MetarSpecials.new
       @runway = CrystalMetarParser::Runway.new
+      @other = CrystalMetarParser::MetarOther.new
 
       decode
       post_process
@@ -52,6 +54,7 @@ module CrystalMetarParser
 
     getter :specials
     getter :runway
+    getter :other
 
 
     def decode
@@ -72,6 +75,7 @@ module CrystalMetarParser
 
       @specials.decode_split(s)
       @runway.decode_split(s)
+      @other.decode_split(s)
     end
 
     def post_process
@@ -96,7 +100,9 @@ module CrystalMetarParser
         pressure: @pressure.pressure
         clouds: @clouds.clouds_max,
         rain_metar: @specials.rain_metar,
-        snow_metar: @specials.snow_metar
+        snow_metar: @specials.snow_metar,
+        station_precip: @other.station,
+        station_auto: @other.station_auto
       }
     end
 
