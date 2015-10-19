@@ -15,7 +15,6 @@ require "./metar/metar_other"
 
 module CrystalMetarParser
   class Metar
-
     DEFAULT_TIME_INTERVAL = 30 * 60
 
     def initialize(_raw, options = {} of String => String)
@@ -56,7 +55,6 @@ module CrystalMetarParser
     getter :runway
     getter :other
 
-
     def decode
       @raw_splits.each do |s|
         decode_split(s)
@@ -87,24 +85,23 @@ module CrystalMetarParser
 
     def to_hash
       {
-        city: @city.code,
-        time_from: @time.time_from,
-        time_to: @time.time_to,
-        temperature: @temperature.degrees,
-        dew: @temperature.dew,
-        humidity: @temperature.humidity,
-        wind_chill: @temperature.wind_chill,
-        wind: @wind.speed,
+        city:           @city.code,
+        time_from:      @time.time_from,
+        time_to:        @time.time_to,
+        temperature:    @temperature.degrees,
+        dew:            @temperature.dew,
+        humidity:       @temperature.humidity,
+        wind_chill:     @temperature.wind_chill,
+        wind:           @wind.speed,
         wind_direction: @wind.direction,
-        visibility: @visibility.visibility,
-        pressure: @pressure.pressure,
-        clouds: @clouds.clouds_max,
-        rain_metar: @specials.rain_metar,
-        snow_metar: @specials.snow_metar,
+        visibility:     @visibility.visibility,
+        pressure:       @pressure.pressure,
+        clouds:         @clouds.clouds_max,
+        rain_metar:     @specials.rain_metar,
+        snow_metar:     @specials.snow_metar,
         station_precip: @other.station,
-        station_auto: @other.station_auto
+        station_auto:   @other.station_auto,
       }
     end
-
   end
 end

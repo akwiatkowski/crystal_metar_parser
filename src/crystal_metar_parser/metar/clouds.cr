@@ -2,18 +2,17 @@ require "./base"
 require "./cloud_element"
 
 class CrystalMetarParser::Clouds < CrystalMetarParser::Base
-
   # Cloud level - clear sky
   CLOUD_CLEAR = (0 * 100.0 / 8.0).round
   # Cloud level - few clouds
   CLOUD_FEW = (1.5 * 100.0 / 8.0).round
-  #Cloud level - scattered
+  # Cloud level - scattered
   CLOUD_SCATTERED = (3.5 * 100.0 / 8.0).round
-  #Cloud level - broken
+  # Cloud level - broken
   CLOUD_BROKEN = (6 * 100.0 / 8.0).round
-  #Cloud level - overcast
+  # Cloud level - overcast
   CLOUD_OVERCAST = (8 * 100.0 / 8.0).round
-  #Cloud level - not significant
+  # Cloud level - not significant
   CLOUD_NOT_SIGN = (0.5 * 100.0 / 8.0).round
 
   def initialize
@@ -26,36 +25,36 @@ class CrystalMetarParser::Clouds < CrystalMetarParser::Base
   def decode_split(s)
     if s =~ /^(SKC|FEW|SCT|BKN|OVC|NSC)(\d{3}?)$/
       cl = case $1
-             when "SKC" then
-               CLOUD_CLEAR
-             when "FEW" then
-               CLOUD_FEW
-             when "SCT" then
-               CLOUD_SCATTERED
-             when "BKN" then
-               CLOUD_BROKEN
-             when "OVC" then
-               CLOUD_OVERCAST
-             when "NSC" then
-               CLOUD_NOT_SIGN
-             else
-               CLOUD_CLEAR
+           when "SKC"
+             CLOUD_CLEAR
+           when "FEW"
+             CLOUD_FEW
+           when "SCT"
+             CLOUD_SCATTERED
+           when "BKN"
+             CLOUD_BROKEN
+           when "OVC"
+             CLOUD_OVERCAST
+           when "NSC"
+             CLOUD_NOT_SIGN
+           else
+             CLOUD_CLEAR
            end
 
       @clouds << CrystalMetarParser::CloudElement.new(cl, $2, "")
-      #@clouds.uniq!
+      # @clouds.uniq!
     end
 
     # obscured by clouds, vertical visibility
     if s =~ /^(VV)(\d{3}?)$/
       @clouds << CrystalMetarParser::CloudElement.new(CLOUD_OVERCAST, "", $2)
-      #@clouds.uniq!
+
+      # @clouds.uniq!
     end
 
     if s =~ /^(CAVOK)$/
       # everything is awesome :)
     end
-
   end
 
   # Calculate numeric description of clouds

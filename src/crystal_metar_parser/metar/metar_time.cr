@@ -1,8 +1,7 @@
 require "./base"
 
 class CrystalMetarParser::MetarTime < CrystalMetarParser::Base
-
-  def initialize(_year, _month, _time_interval = 30*60)
+  def initialize(_year, _month, _time_interval = 30 * 60)
     @year = _year
     @month = _month
     @time = Time.now
@@ -10,7 +9,6 @@ class CrystalMetarParser::MetarTime < CrystalMetarParser::Base
   end
 
   getter :year, :month, :time, :time_interval
-
 
   def decode_split(s)
     if s =~ /(\d{2})(\d{2})(\d{2})Z/
@@ -25,5 +23,4 @@ class CrystalMetarParser::MetarTime < CrystalMetarParser::Base
   def time_to
     self.time_from + Time::Span.new(0, 0, self.time_interval)
   end
-
 end

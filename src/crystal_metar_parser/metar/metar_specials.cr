@@ -2,7 +2,6 @@ require "./base"
 require "./metar_special_partial"
 
 class CrystalMetarParser::MetarSpecials < CrystalMetarParser::Base
-
   # description http://www.ofcm.gov/fmh-1/pdf/H-CH8.pdf
 
   def initialize
@@ -27,92 +26,92 @@ class CrystalMetarParser::MetarSpecials < CrystalMetarParser::Base
   def decode_specials(s)
     if s =~ /^(VC|\-|\+|\b)(MI|PR|BC|DR|BL|SH|TS|FZ|)(DZ|RA|SN|SG|IC|PE|GR|GS|UP|)(BR|FG|FU|VA|DU|SA|HZ|PY|)(PO|SQ|FC|SS|)$/
       intensity = case $1
-                    when "VC" then
-                      "in the vicinity"
-                    when "+" then
-                      "heavy"
-                    when "-" then
-                      "light"
-                    else
-                      "moderate"
+                  when "VC"
+                    "in the vicinity"
+                  when "+"
+                    "heavy"
+                  when "-"
+                    "light"
+                  else
+                    "moderate"
                   end
 
       descriptor = case $2
-                     when "MI" then
-                       "shallow"
-                     when "PR" then
-                       "partial"
-                     when "BC" then
-                       "patches"
-                     when "DR" then
-                       "low drifting"
-                     when "BL" then
-                       "blowing"
-                     when "SH" then
-                       "shower"
-                     when "TS" then
-                       "thunderstorm"
-                     when "FZ" then
-                       "freezing"
-                     else
-                       ""
+                   when "MI"
+                     "shallow"
+                   when "PR"
+                     "partial"
+                   when "BC"
+                     "patches"
+                   when "DR"
+                     "low drifting"
+                   when "BL"
+                     "blowing"
+                   when "SH"
+                     "shower"
+                   when "TS"
+                     "thunderstorm"
+                   when "FZ"
+                     "freezing"
+                   else
+                     ""
                    end
 
       precipitation = case $3
-                        when "DZ" then
-                          "drizzle"
-                        when "RA" then
-                          "rain"
-                        when "SN" then
-                          "snow"
-                        when "SG" then
-                          "snow grains"
-                        when "IC" then
-                          "ice crystals"
-                        when "PE" then
-                          "ice pellets"
-                        when "GR" then
-                          "hail"
-                        when "GS" then
-                          "small hail/snow pellets"
-                        when "UP" then
-                          "unknown"
-                        else
-                          ""
+                      when "DZ"
+                        "drizzle"
+                      when "RA"
+                        "rain"
+                      when "SN"
+                        "snow"
+                      when "SG"
+                        "snow grains"
+                      when "IC"
+                        "ice crystals"
+                      when "PE"
+                        "ice pellets"
+                      when "GR"
+                        "hail"
+                      when "GS"
+                        "small hail/snow pellets"
+                      when "UP"
+                        "unknown"
+                      else
+                        ""
                       end
 
       obscuration = case $4
-                      when "BR" then
-                        "mist"
-                      when "FG" then
-                        "fog"
-                      when "FU" then
-                        "smoke"
-                      when "VA" then
-                        "volcanic ash"
-                      when "DU" then
-                        "dust"
-                      when "SA" then
-                        "sand"
-                      when "HZ" then
-                        "haze"
-                      when "PY" then
-                        "spray"
-                      else
-                        ""
+                    when "BR"
+                      "mist"
+                    when "FG"
+                      "fog"
+                    when "FU"
+                      "smoke"
+                    when "VA"
+                      "volcanic ash"
+                    when "DU"
+                      "dust"
+                    when "SA"
+                      "sand"
+                    when "HZ"
+                      "haze"
+                    when "PY"
+                      "spray"
+                    else
+                      ""
                     end
 
       misc = case $5
-               when "PO" then
-                 "dust whirls"
-               when "SQ" then
-                 "squalls"
-               when "FC" then
-                 "funnel cloud/tornado/waterspout"
-               when "SS" then
-                 "duststorm"
-               else
-                 ""
+             when "PO"
+               "dust whirls"
+             when "SQ"
+               "squalls"
+             when "FC"
+               "funnel cloud/tornado/waterspout"
+             when "SS"
+               "duststorm"
+             else
+               ""
              end
 
       # when no sensible data do nothing
@@ -131,7 +130,6 @@ class CrystalMetarParser::MetarSpecials < CrystalMetarParser::Base
         $4,
         $5
       )
-
     end
   end
 
@@ -145,44 +143,37 @@ class CrystalMetarParser::MetarSpecials < CrystalMetarParser::Base
       new_snow = 0
       coefficient = 1
       case s.precipitation
-        when "drizzle" then
-          new_rain = 5
-
-        when "rain" then
-          new_rain = 10
-
-        when "snow" then
-          new_snow = 10
-
-        when "snow grains" then
-          new_snow = 5
-
-        when "ice crystals" then
-          new_snow = 1
-          new_rain = 1
-
-        when "ice pellets" then
-          new_snow = 2
-          new_rain = 2
-
-        when "hail" then
-          new_snow = 3
-          new_rain = 3
-
-        when "small hail/snow pellets" then
-          new_snow = 1
-          new_rain = 1
+      when "drizzle"
+        new_rain = 5
+      when "rain"
+        new_rain = 10
+      when "snow"
+        new_snow = 10
+      when "snow grains"
+        new_snow = 5
+      when "ice crystals"
+        new_snow = 1
+        new_rain = 1
+      when "ice pellets"
+        new_snow = 2
+        new_rain = 2
+      when "hail"
+        new_snow = 3
+        new_rain = 3
+      when "small hail/snow pellets"
+        new_snow = 1
+        new_rain = 1
       end
 
       case s.intensity
-        when "in the vicinity" then
-          coefficient = 1.5
-        when "heavy" then
-          coefficient = 3
-        when "light" then
-          coefficient = 0.5
-        when "moderate" then
-          coefficient = 1
+      when "in the vicinity"
+        coefficient = 1.5
+      when "heavy"
+        coefficient = 3
+      when "light"
+        coefficient = 0.5
+      when "moderate"
+        coefficient = 1
       end
 
       snow = new_snow * coefficient
@@ -194,7 +185,6 @@ class CrystalMetarParser::MetarSpecials < CrystalMetarParser::Base
       if @rain_metar < rain
         @rain_metar = rain
       end
-
     end
 
     # http://www.ofcm.gov/fmh-1/pdf/H-CH8.pdf page 3
@@ -203,8 +193,5 @@ class CrystalMetarParser::MetarSpecials < CrystalMetarParser::Base
     real_world_coefficient = 0.5 * 25.4 / 10.0
     @snow_metar *= real_world_coefficient
     @rain_metar *= real_world_coefficient
-
-
   end
-
 end

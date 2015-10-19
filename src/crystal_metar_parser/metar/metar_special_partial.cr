@@ -1,18 +1,16 @@
 class CrystalMetarParser::MetarSpecialPartial
   def initialize(
-      _intensity,
-      _descriptor,
-      _precipitation,
-      _obscuration,
-      _misc,
+                 _intensity,
+                 _descriptor,
+                 _precipitation,
+                 _obscuration,
+                 _misc,
 
-      _intensity_raw,
-      _descriptor_raw,
-      _precipitation_raw,
-      _obscuration_raw,
-      _misc_raw,
-    )
-
+                 _intensity_raw,
+                 _descriptor_raw,
+                 _precipitation_raw,
+                 _obscuration_raw,
+                 _misc_raw)
     @intensity = _intensity
     @descriptor = _descriptor
     @precipitation = _precipitation
@@ -28,5 +26,4 @@ class CrystalMetarParser::MetarSpecialPartial
 
   getter :intensity, :descriptor, :precipitation, :obscuration, :misc
   getter :intensity_raw, :descriptor_raw, :precipitation_raw, :obscuration_raw, :misc_raw
-
 end

@@ -1,7 +1,6 @@
 require "./base"
 
 class CrystalMetarParser::MetarOther < CrystalMetarParser::Base
-
   def initialize
     @station = ""
     @station_auto = false
@@ -20,6 +19,5 @@ class CrystalMetarParser::MetarOther < CrystalMetarParser::Base
     if s.strip == "AUTO"
       @station_auto = true
     end
-
   end
 end

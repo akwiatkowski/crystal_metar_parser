@@ -1,11 +1,10 @@
 module CrystalMetarParser
   class Base
-
-    #def initialize(_parent)
+    # def initialize(_parent)
     #  @parent = _parent
     #  reset
-    #end
-    #getter :parent
+    # end
+    # getter :parent
 
     def reset
       # implement
@@ -18,6 +17,5 @@ module CrystalMetarParser
     def post_process
       # implement
     end
-
   end
 end

@@ -1,7 +1,6 @@
 require "./base"
 
 class CrystalMetarParser::MetarCity < CrystalMetarParser::Base
-
   def initialize
     @code = ""
   end
@@ -13,5 +12,4 @@ class CrystalMetarParser::MetarCity < CrystalMetarParser::Base
       @code = $1
     end
   end
-
 end

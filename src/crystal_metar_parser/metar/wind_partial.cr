@@ -7,5 +7,4 @@ class CrystalMetarParser::WindPartial
   end
 
   getter :speed, :speed_max, :direction, :is_variable
-
 end

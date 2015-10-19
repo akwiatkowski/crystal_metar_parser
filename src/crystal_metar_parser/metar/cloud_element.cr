@@ -13,7 +13,6 @@ class CrystalMetarParser::CloudElement
     else
       @vertical_visibility = -1
     end
-
   end
 
   getter :coverage, :bottom, :vertical_visibility

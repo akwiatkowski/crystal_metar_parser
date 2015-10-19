@@ -47,5 +47,4 @@ class CrystalMetarParser::Visibility < CrystalMetarParser::Base
   def to_hash
     {visibility: @visibility}
   end
-
 end
