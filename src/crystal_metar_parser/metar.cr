@@ -7,6 +7,10 @@ require "./metar/temperature"
 require "./metar/wind"
 require "./metar/visibility"
 require "./metar/pressure"
+require "./metar/clouds"
+
+require "./metar/metar_specials"
+require "./metar/runway"
 
 module CrystalMetarParser
   class Metar
@@ -28,6 +32,10 @@ module CrystalMetarParser
       @wind = CrystalMetarParser::Wind.new
       @visibility = CrystalMetarParser::Visibility.new
       @pressure = CrystalMetarParser::Pressure.new
+      @clouds = CrystalMetarParser::Clouds.new
+
+      @specials = CrystalMetarParser::MetarSpecials.new
+      @runway = CrystalMetarParser::Runway.new
 
 
 
@@ -43,6 +51,9 @@ module CrystalMetarParser
     getter :temperature
     getter :pressure
 
+    getter :specials
+    getter :runway
+
     def decode
       @raw_splits.each do |s|
         decode_split(s)
@@ -57,12 +68,17 @@ module CrystalMetarParser
       @wind.decode_split(s)
       @visibility.decode_split(s)
       @pressure.decode_split(s)
+      @clouds.decode_split(s)
 
+      @specials.decode_split(s)
+      @runway.decode_split(s)
     end
 
     def post_process
       @wind.post_process
       @temperature.post_process(@wind)
+      @specials.post_process
+      @clouds.post_process
     end
 
 

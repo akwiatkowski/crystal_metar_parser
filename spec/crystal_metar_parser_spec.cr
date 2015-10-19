@@ -13,8 +13,9 @@ describe CrystalMetarParser do
     metar.pressure.pressure.should eq 1019
     metar.time.time.day.should eq 19
     metar.time.time.hour.should eq 12
+    metar.specials.specials.size.should eq 0
+    metar.runway.runways.size.should eq 0
 
-
-    puts metar.time.time
+    puts metar
   end
 end
