@@ -89,15 +89,15 @@ module CrystalMetarParser
       {
         city: @city.code,
         time_from: @time.time_from,
-        time_to: @time.time_to
-        temperature: @temperature.degrees
+        time_to: @time.time_to,
+        temperature: @temperature.degrees,
         dew: @temperature.dew,
         humidity: @temperature.humidity,
         wind_chill: @temperature.wind_chill,
         wind: @wind.speed,
-        wind_direction: @wind.direction
-        visibility: @visibility.visibility
-        pressure: @pressure.pressure
+        wind_direction: @wind.direction,
+        visibility: @visibility.visibility,
+        pressure: @pressure.pressure,
         clouds: @clouds.clouds_max,
         rain_metar: @specials.rain_metar,
         snow_metar: @specials.snow_metar,
