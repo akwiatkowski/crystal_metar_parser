@@ -15,7 +15,8 @@ describe CrystalMetarParser do
     metar.time.time.hour.should eq 12
     metar.specials.specials.size.should eq 0
     metar.runway.runways.size.should eq 0
+    metar.clouds.clouds.size.should eq 2
 
-    puts metar
+    puts metar.to_hash.inspect
   end
 end

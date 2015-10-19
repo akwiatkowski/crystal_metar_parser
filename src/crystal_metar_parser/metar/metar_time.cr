@@ -23,7 +23,7 @@ class CrystalMetarParser::MetarTime < CrystalMetarParser::Base
   end
 
   def time_to
-    self.time_from + self.time_interval
+    self.time_from + Time::Span.new(0, 0, self.time_interval)
   end
 
 end

@@ -37,8 +37,6 @@ module CrystalMetarParser
       @specials = CrystalMetarParser::MetarSpecials.new
       @runway = CrystalMetarParser::Runway.new
 
-
-
       decode
       post_process
     end
@@ -50,9 +48,11 @@ module CrystalMetarParser
     getter :wind
     getter :temperature
     getter :pressure
+    getter :clouds
 
     getter :specials
     getter :runway
+
 
     def decode
       @raw_splits.each do |s|
@@ -81,6 +81,24 @@ module CrystalMetarParser
       @clouds.post_process
     end
 
+    def to_hash
+      {
+        city: @city.code,
+        time_from: @time.time_from,
+        time_to: @time.time_to
+        temperature: @temperature.degrees
+        dew: @temperature.dew,
+        humidity: @temperature.humidity,
+        wind_chill: @temperature.wind_chill,
+        wind: @wind.speed,
+        wind_direction: @wind.direction
+        visibility: @visibility.visibility
+        pressure: @pressure.pressure
+        clouds: @clouds.clouds_max,
+        rain_metar: @specials.rain_metar,
+        snow_metar: @specials.snow_metar
+      }
+    end
 
   end
 end
