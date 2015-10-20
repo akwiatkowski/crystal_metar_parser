@@ -42,6 +42,7 @@ module CrystalMetarParser
       post_process
     end
 
+    getter :raw
     getter :city
     getter :time
 
