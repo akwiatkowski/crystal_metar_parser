@@ -1,4 +1,4 @@
-class CrystalMetarParser::MetarSpecialPartial
+class CrystalMetarParser::MetarSpecialElement
   def initialize(
                  _intensity,
                  _descriptor,

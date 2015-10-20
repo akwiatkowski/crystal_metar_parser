@@ -1,4 +1,4 @@
-class CrystalMetarParser::WindPartial
+class CrystalMetarParser::WindElement
   def initialize(_speed, _speed_max, _direction, _is_variable = false)
     @speed = _speed as Float64
     @speed_max = _speed_max

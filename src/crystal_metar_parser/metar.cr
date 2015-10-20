@@ -25,6 +25,17 @@ module CrystalMetarParser
       @month = Time.utc_now.month
       @time_interval = DEFAULT_TIME_INTERVAL
 
+      # process options
+      if options.has_key?(":year")
+        @year = options[":year"].to_i
+      end
+      if options.has_key?(":month")
+        @month = options[":month"].to_i
+      end
+      if options.has_key?(":time_interval")
+        @time_interval = options[":time_interval"].to_i
+      end
+
       @city = CrystalMetarParser::MetarCity.new
       @time = CrystalMetarParser::MetarTime.new(@year, @month, @time_interval)
 

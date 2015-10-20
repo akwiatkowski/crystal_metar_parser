@@ -1,9 +1,11 @@
 require "./base"
-require "./wind_partial"
+require "./wind_element"
+require "./wind_variable_element"
 
 class CrystalMetarParser::Wind < CrystalMetarParser::Base
   def initialize
-    @winds_partials = [] of WindPartial
+    @wind_elements = [] of WindElement
+    @wind_variable_elements = [] of WindVariableElement
     @speed = -1.0
     @direction = -1
   end
@@ -15,8 +17,7 @@ class CrystalMetarParser::Wind < CrystalMetarParser::Base
 
   def decode_split(s)
     decode_wind(s)
-
-    # decode_wind_variable(s)
+    decode_wind_variable(s)
   end
 
   def post_process
@@ -38,24 +39,28 @@ class CrystalMetarParser::Wind < CrystalMetarParser::Base
                0.0
              end
 
-      #     wind_max = case $4
-      #                when "KT"
-      #                  $3.to_f * KNOTS_TO_METERS_PER_SECOND
-      #                when "MPS"
-      #                  $3.to_f
-      #                when "KMH"
-      #                  $3.to_f * KILOMETERS_PER_HOUR_TO_METERS_PER_SECOND
-      #                else
-      #                  0.0
-      #                end
+      begin
+        wind_max = case $4
+                   when "KT"
+                     $3.to_s.to_f * KNOTS_TO_METERS_PER_SECOND
+                   when "MPS"
+                     $3.to_s.to_f
+                   when "KMH"
+                     $3.to_s.to_f * KILOMETERS_PER_HOUR_TO_METERS_PER_SECOND
+                   else
+                     0.0
+                   end
+      rescue
+        wind_max = wind
+      end
 
-      #     # wind_max is not less than normal wind
-      #     if wind_max < wind || wind_max == 0.0
-      #       wind_max = wind
-      #     end
+      # wind_max is not less than normal wind
+      if wind_max < wind || wind_max == 0.0
+        wind_max = wind
+      end
 
-      w = CrystalMetarParser::WindPartial.new(wind, wind, $1.to_i, false)
-      @winds_partials << w
+      w = CrystalMetarParser::WindElement.new(wind, wind, $1.to_i, false)
+      @wind_elements << w
     end
 
     # variable/unknown direction
@@ -71,31 +76,26 @@ class CrystalMetarParser::Wind < CrystalMetarParser::Base
                nil
              end
 
-      w = CrystalMetarParser::WindPartial.new(wind, wind, -1, true)
-      @winds_partials << w
+      w = CrystalMetarParser::WindElement.new(wind, wind, -1, true)
+      @wind_elements << w
     end
   end
 
-  #  # Variable wind direction
-  #  def decode_wind_variable(s)
-  #    if s =~ /(\d{3})V(\d{3})/
-  #     @winds_variable_directions << {
-  #       :wind_variable_direction_from => $1.to_i,
-  #       :wind_variable_direction_to   => $2.to_i,
-  #       :wind_direction               => ($1.to_i + $2.to_i) / 2,
-  #       :wind_variable                => true,
-  #     }
-#
-  #    end
-  #  end
+  # Variable wind direction
+  def decode_wind_variable(s)
+    if s =~ /(\d{3})V(\d{3})/
+      w = CrystalMetarParser::WindVariableElement.new($1.to_i, $2.to_i)
+      @wind_variable_elements << w
+    end
+  end
 
   # Calculate wind parameters, some metar string has multiple winds recorded
   def recalculate_winds
-    wind_sum = @winds_partials.sum { |w| w.speed }
-    @speed = wind_sum.to_f / @winds_partials.size if @winds_partials.size > 0
+    wind_sum = @wind_elements.sum { |w| w.speed }
+    @speed = wind_sum.to_f / @wind_elements.size if @wind_elements.size > 0
 
-    if @winds_partials.size == 1
-      @direction = @winds_partials.first.direction
+    if @wind_elements.size == 1
+      @direction = @wind_elements.first.direction
     end
   end
 

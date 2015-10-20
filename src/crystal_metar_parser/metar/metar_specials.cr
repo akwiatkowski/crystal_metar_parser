@@ -1,11 +1,11 @@
 require "./base"
-require "./metar_special_partial"
+require "./metar_special_element"
 
 class CrystalMetarParser::MetarSpecials < CrystalMetarParser::Base
   # description http://www.ofcm.gov/fmh-1/pdf/H-CH8.pdf
 
   def initialize
-    @specials = [] of MetarSpecialPartial
+    @specials = [] of MetarSpecialElement
     @snow_metar = -1
     @rain_metar = -1
   end
@@ -117,7 +117,7 @@ class CrystalMetarParser::MetarSpecials < CrystalMetarParser::Base
       # when no sensible data do nothing
       return if descriptor == "" && precipitation == "" && obscuration == "" && misc == ""
 
-      @specials << CrystalMetarParser::MetarSpecialPartial.new(
+      @specials << CrystalMetarParser::MetarSpecialElement.new(
         intensity,
         descriptor,
         precipitation,

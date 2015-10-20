@@ -17,6 +17,20 @@ describe CrystalMetarParser do
     metar.runway.runways.size.should eq 0
     metar.clouds.clouds.size.should eq 2
 
-    puts metar.to_hash.inspect
+    # puts metar.to_hash.inspect
+  end
+
+  it "works with custom year and month" do
+    hash = {
+             ":year"          => "2020",
+             ":month"         => "1",
+             ":time_interval" => 60 * 60,
+           }
+
+    metar = CrystalMetarParser::Parser.parse("EPPO 191200Z 29005KT 9999 FEW011 BKN021 09/06 Q1019", hash)
+
+    metar.time.time.year.should eq 2020
+    metar.time.time.month.should eq 1
+    (metar.time.time_to - metar.time.time_from).to_i.should eq 60 * 60
   end
 end
