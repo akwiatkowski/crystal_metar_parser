@@ -90,9 +90,9 @@ class CrystalMetarParser::Temperature < CrystalMetarParser::Base
     ta = self.temperature
 
     @wind_chill_us = 13.12 +
-                       0.6215 * ta -
-                       11.37 * v +
-                       0.3965 * ta * v
+      0.6215 * ta -
+      11.37 * v +
+      0.3965 * ta * v
 
     @wind_chill = (10.0 * Math.sqrt(v) - v + 10.5) * (33.0 - ta)
   end

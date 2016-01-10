@@ -22,10 +22,10 @@ describe CrystalMetarParser do
 
   it "works with custom year and month" do
     hash = {
-             ":year"          => "2020",
-             ":month"         => "1",
-             ":time_interval" => 60 * 60,
-           }
+      ":year"          => "2020",
+      ":month"         => "1",
+      ":time_interval" => 60 * 60,
+    }
 
     metar = CrystalMetarParser::Parser.parse("EPPO 191200Z 29005KT 9999 FEW011 BKN021 09/06 Q1019", hash)
 
