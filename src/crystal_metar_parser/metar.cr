@@ -17,7 +17,7 @@ module CrystalMetarParser
   class Metar
     DEFAULT_TIME_INTERVAL = 30 * 60
 
-    def initialize(_raw, options = {} of String => String)
+    def initialize(_raw, year = nil, month = nil, time_interval = nil)
       @raw = _raw.to_s.gsub(/\s/, ' ').strip
       @raw_splits = @raw.split(' ')
 
@@ -26,15 +26,9 @@ module CrystalMetarParser
       @time_interval = DEFAULT_TIME_INTERVAL
 
       # process options
-      if options.has_key?(":year")
-        @year = options[":year"].to_i
-      end
-      if options.has_key?(":month")
-        @month = options[":month"].to_i
-      end
-      if options.has_key?(":time_interval")
-        @time_interval = options[":time_interval"].to_i
-      end
+      @year = year.to_s.to_i unless year.is_a?(Nil)
+      @month = month.to_s.to_i unless month.is_a?(Nil)
+      @time_interval = time_interval.to_s.to_i unless time_interval.is_a?(Nil)
 
       @city = CrystalMetarParser::MetarCity.new
       @time = CrystalMetarParser::MetarTime.new(@year, @month, @time_interval)
