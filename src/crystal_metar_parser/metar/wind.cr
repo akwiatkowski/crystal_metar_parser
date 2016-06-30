@@ -4,7 +4,7 @@ require "./wind_variable_element"
 
 class CrystalMetarParser::Wind < CrystalMetarParser::Base
   def initialize
-    @wind_elements = [] of WindElement
+    @wind_elements = Array(CrystalMetarParser::WindElement).new
     @wind_variable_elements = [] of WindVariableElement
     @speed = -1.0
     @direction = -1
@@ -59,7 +59,12 @@ class CrystalMetarParser::Wind < CrystalMetarParser::Base
         wind_max = wind
       end
 
-      w = CrystalMetarParser::WindElement.new(wind, wind, $1.to_i, false)
+      w = CrystalMetarParser::WindElement.new(
+        speed: wind,
+        speed_max: wind_max,
+        direction: $1.to_i,
+        is_variable: false
+      )
       @wind_elements << w
     end
 
@@ -76,8 +81,15 @@ class CrystalMetarParser::Wind < CrystalMetarParser::Base
                nil
              end
 
-      w = CrystalMetarParser::WindElement.new(wind, wind, -1, true)
-      @wind_elements << w
+      unless wind.nil?
+        w = CrystalMetarParser::WindElement.new(
+          speed: wind,
+          speed_max: wind,
+          direction: -1,
+          is_variable: true
+        )
+        @wind_elements << w
+      end
     end
   end
 

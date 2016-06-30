@@ -4,10 +4,13 @@ require "./metar_special_element"
 class CrystalMetarParser::MetarSpecials < CrystalMetarParser::Base
   # description http://www.ofcm.gov/fmh-1/pdf/H-CH8.pdf
 
+  @snow_metar : Float64
+  @rain_metar : Float64
+
   def initialize
-    @specials = [] of MetarSpecialElement
-    @snow_metar = -1
-    @rain_metar = -1
+    @specials = Array(MetarSpecialElement).new
+    @snow_metar = -1.0
+    @rain_metar = -1.0
   end
 
   getter :specials
@@ -135,45 +138,45 @@ class CrystalMetarParser::MetarSpecials < CrystalMetarParser::Base
 
   # Calculate precipitation in self defined units and aproximated real world units
   def calculate_rain_and_snow
-    @snow_metar = 0
-    @rain_metar = 0
+    @snow_metar = 0.0
+    @rain_metar = 0.0
 
     self.specials.each do |s|
-      new_rain = 0
-      new_snow = 0
-      coefficient = 1
+      new_rain = 0.0
+      new_snow = 0.0
+      coefficient = 1.0
       case s.precipitation
       when "drizzle"
-        new_rain = 5
+        new_rain = 5.0
       when "rain"
-        new_rain = 10
+        new_rain = 10.0
       when "snow"
-        new_snow = 10
+        new_snow = 10.0
       when "snow grains"
-        new_snow = 5
+        new_snow = 5.0
       when "ice crystals"
-        new_snow = 1
-        new_rain = 1
+        new_snow = 1.0
+        new_rain = 1.0
       when "ice pellets"
-        new_snow = 2
-        new_rain = 2
+        new_snow = 2.0
+        new_rain = 2.0
       when "hail"
-        new_snow = 3
-        new_rain = 3
+        new_snow = 3.0
+        new_rain = 3.0
       when "small hail/snow pellets"
-        new_snow = 1
-        new_rain = 1
+        new_snow = 1.0
+        new_rain = 1.0
       end
 
       case s.intensity
       when "in the vicinity"
         coefficient = 1.5
       when "heavy"
-        coefficient = 3
+        coefficient = 3.0
       when "light"
         coefficient = 0.5
       when "moderate"
-        coefficient = 1
+        coefficient = 1.0
       end
 
       snow = new_snow * coefficient

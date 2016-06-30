@@ -4,6 +4,8 @@ class CrystalMetarParser::Pressure < CrystalMetarParser::Base
   HG_INCH_TO_HPA = 1013.0 / 2992.1
   HG_MM_TO_HPA   = HG_INCH_TO_HPA * 25.4
 
+  @pressure : Int32
+
   def initialize
     @pressure = -1
   end
@@ -18,7 +20,7 @@ class CrystalMetarParser::Pressure < CrystalMetarParser::Base
     # US
     if s =~ /A(\d{4})/
       # 1013 hPa = 29.921 inNg
-      @pressure = (($1.to_f) * HG_INCH_TO_HPA).round
+      @pressure = (($1.to_f) * HG_INCH_TO_HPA).round.to_i
     end
   end
 

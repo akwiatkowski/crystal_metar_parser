@@ -1,8 +1,5 @@
 class CrystalMetarParser::RunwayElement
-  def initialize(_runway, _visibility, _change = "")
-    @runway = _runway
-    @visibility = _visibility
-    @change = _change
+  def initialize(@runway : String, @visibility : Int32, @change : String = "")
   end
 
   getter :runway, :visibility, :chage

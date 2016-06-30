@@ -1,7 +1,5 @@
 class CrystalMetarParser::CloudElement
-  def initialize(_coverage, _bottom = "", _vertical_visibility = "")
-    @coverage = _coverage
-
+  def initialize(@coverage : Int32, _bottom : String = "", _vertical_visibility : String = "")
     unless "" == _bottom.to_s
       @bottom = _bottom.to_i * 30
     else

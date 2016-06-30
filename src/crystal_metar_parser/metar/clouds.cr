@@ -3,17 +3,17 @@ require "./cloud_element"
 
 class CrystalMetarParser::Clouds < CrystalMetarParser::Base
   # Cloud level - clear sky
-  CLOUD_CLEAR = (0 * 100.0 / 8.0).round
+  CLOUD_CLEAR = (0 * 100.0 / 8.0).round.to_i
   # Cloud level - few clouds
-  CLOUD_FEW = (1.5 * 100.0 / 8.0).round
+  CLOUD_FEW = (1.5 * 100.0 / 8.0).round.to_i
   # Cloud level - scattered
-  CLOUD_SCATTERED = (3.5 * 100.0 / 8.0).round
+  CLOUD_SCATTERED = (3.5 * 100.0 / 8.0).round.to_i
   # Cloud level - broken
-  CLOUD_BROKEN = (6 * 100.0 / 8.0).round
+  CLOUD_BROKEN = (6 * 100.0 / 8.0).round.to_i
   # Cloud level - overcast
-  CLOUD_OVERCAST = (8 * 100.0 / 8.0).round
+  CLOUD_OVERCAST = (8 * 100.0 / 8.0).round.to_i
   # Cloud level - not significant
-  CLOUD_NOT_SIGN = (0.5 * 100.0 / 8.0).round
+  CLOUD_NOT_SIGN = (0.5 * 100.0 / 8.0).round.to_i
 
   def initialize
     @clouds = [] of CloudElement

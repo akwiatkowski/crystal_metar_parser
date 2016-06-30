@@ -1,27 +1,16 @@
 class CrystalMetarParser::MetarSpecialElement
   def initialize(
-                 _intensity,
-                 _descriptor,
-                 _precipitation,
-                 _obscuration,
-                 _misc,
+                 @intensity : String,
+                 @descriptor : String,
+                 @precipitation : String,
+                 @obscuration : String,
+                 @misc : String,
 
-                 _intensity_raw,
-                 _descriptor_raw,
-                 _precipitation_raw,
-                 _obscuration_raw,
-                 _misc_raw)
-    @intensity = _intensity
-    @descriptor = _descriptor
-    @precipitation = _precipitation
-    @obscuration = _obscuration
-    @misc = _misc
-
-    @intensity_raw = _intensity_raw
-    @descriptor_raw = _descriptor_raw
-    @precipitation_raw = _precipitation_raw
-    @obscuration_raw = _obscuration_raw
-    @misc_raw = _misc_raw
+                 @intensity_raw : String,
+                 @descriptor_raw : String,
+                 @precipitation_raw : String,
+                 @obscuration_raw : String,
+                 @misc_raw : String)
   end
 
   getter :intensity, :descriptor, :precipitation, :obscuration, :misc

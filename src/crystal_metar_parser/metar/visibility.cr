@@ -7,6 +7,8 @@ class CrystalMetarParser::Visibility < CrystalMetarParser::Base
   # If visibility is greater than this it assume it is maximum
   NEARLY_MAX_VISIBILITY = 9_500
 
+  @visibility : Int32
+
   def initialize
     @visibility = -1
   end
@@ -28,9 +30,9 @@ class CrystalMetarParser::Visibility < CrystalMetarParser::Base
     # US
     if s =~ /^(\d{1,3})\/?(\d{0,2})SM$/
       if $2 == ""
-        @visibility = $1.to_i * 1600.0
+        @visibility = ($1.to_f * 1600.0).to_i
       else
-        @visibility = $1.to_f * 1600.0 / $2.to_f
+        @visibility = ($1.to_f * 1600.0 / $2.to_f).to_i
       end
     end
 

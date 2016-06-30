@@ -1,11 +1,11 @@
 require "./base"
 
 class CrystalMetarParser::MetarTime < CrystalMetarParser::Base
-  def initialize(_year, _month, _time_interval = 30 * 60)
-    @year = _year
-    @month = _month
+  def initialize(
+                 @year : Int32,
+                 @month : Int32,
+                 @time_interval : Int32 = CrystalMetarParser::Metar::DEFAULT_TIME_INTERVAL)
     @time = Time.now
-    @time_interval = _time_interval
   end
 
   getter :year, :month, :time, :time_interval
